@@ -1,4 +1,4 @@
-# EasyChart
+# SnapChart
 
 A dead-simple Flutter charting library. Beautiful charts with minimal code.
 
@@ -21,7 +21,7 @@ All charts include:
 
 ```yaml
 dependencies:
-  easy_chart: ^0.1.0
+  snap_chart: ^0.1.0
 ```
 
 ## Usage
@@ -29,7 +29,7 @@ dependencies:
 ### Line Chart
 
 ```dart
-import 'package:easy_chart/easy_chart.dart';
+import 'package:snap_chart/snap_chart.dart';
 
 EasyLineChart(
   spots: [
@@ -139,7 +139,7 @@ EasyLineChart(
 
 ## Comparison with fl_chart
 
-| Feature | fl_chart | easy_chart |
+| Feature | fl_chart | snap_chart |
 |---------|----------|------------|
 | Line chart | ✅ | ✅ |
 | Bar chart | ✅ | ✅ |

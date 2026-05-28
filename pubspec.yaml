@@ -1,4 +1,4 @@
-name: easy_chart
+name: snap_chart
 description: A dead-simple Flutter charting library. Beautiful charts with minimal code. Inspired by fl_chart but designed for simplicity.
 version: 0.1.0
 homepage: https://github.com/rameshsambudev/easy_chart

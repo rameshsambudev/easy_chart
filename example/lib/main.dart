@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:easy_chart/easy_chart.dart';
+import 'package:snap_chart/snap_chart.dart';
 
 void main() {
   runApp(const EasyChartExampleApp());

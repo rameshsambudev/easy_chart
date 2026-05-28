@@ -1,4 +1,4 @@
-/// EasyChart - A dead-simple Flutter charting library.
+/// SnapChart - A dead-simple Flutter charting library.
 ///
 /// Beautiful charts with minimal code. Just pass your data and go.
 ///
@@ -7,7 +7,7 @@
 ///   spots: [EasySpot(0, 3), EasySpot(1, 1), EasySpot(2, 4)],
 /// )
 /// ```
-library easy_chart;
+library snap_chart;
 
 // Models
 export 'src/models/easy_spot.dart';
