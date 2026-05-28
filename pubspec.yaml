@@ -1,9 +1,9 @@
 name: easy_chart
 description: A dead-simple Flutter charting library. Beautiful charts with minimal code. Inspired by fl_chart but designed for simplicity.
 version: 0.1.0
-homepage: https://github.com/your-username/easy_chart
-repository: https://github.com/your-username/easy_chart
-issue_tracker: https://github.com/your-username/easy_chart/issues
+homepage: https://github.com/rameshsambudev/easy_chart
+repository: https://github.com/rameshsambudev/easy_chart
+issue_tracker: https://github.com/rameshsambudev/easy_chart/issues
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
