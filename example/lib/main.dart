@@ -85,6 +85,7 @@ class _ChartGalleryState extends State<ChartGallery> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Touch info
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(12),
@@ -128,39 +129,6 @@ class _ChartGalleryState extends State<ChartGallery> {
             ),
             const SizedBox(height: 32),
 
-            // Multi-line Chart
-            _buildSection(
-              title: 'Multi-Line Chart',
-              child: SizedBox(
-                height: 200,
-                child: SnapLineChart(
-                  multiLines: [
-                    const [
-                      SnapSpot(0, 2),
-                      SnapSpot(1, 4),
-                      SnapSpot(2, 3),
-                      SnapSpot(3, 5),
-                      SnapSpot(4, 4),
-                    ],
-                    const [
-                      SnapSpot(0, 1),
-                      SnapSpot(1, 2),
-                      SnapSpot(2, 4),
-                      SnapSpot(3, 3),
-                      SnapSpot(4, 6),
-                    ],
-                  ],
-                  curved: true,
-                  lineWidth: 2.5,
-                  style: const SnapChartStyle(
-                    showGrid: true,
-                    gridColor: Color(0xFFEEEEEE),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 32),
-
             // Bar Chart
             _buildSection(
               title: 'Bar Chart',
@@ -181,40 +149,6 @@ class _ChartGalleryState extends State<ChartGallery> {
                       }
                     });
                   },
-                ),
-              ),
-            ),
-            const SizedBox(height: 32),
-
-            // Grouped Bar Chart
-            _buildSection(
-              title: 'Grouped Bar Chart',
-              child: SizedBox(
-                height: 200,
-                child: SnapBarChart(
-                  bars: const [
-                    SnapBar(
-                      label: 'Q1',
-                      groupValues: [12, 8, 15],
-                      groupColors: [Colors.blue, Colors.orange, Colors.green],
-                    ),
-                    SnapBar(
-                      label: 'Q2',
-                      groupValues: [10, 14, 9],
-                      groupColors: [Colors.blue, Colors.orange, Colors.green],
-                    ),
-                    SnapBar(
-                      label: 'Q3',
-                      groupValues: [16, 11, 13],
-                      groupColors: [Colors.blue, Colors.orange, Colors.green],
-                    ),
-                    SnapBar(
-                      label: 'Q4',
-                      groupValues: [14, 17, 10],
-                      groupColors: [Colors.blue, Colors.orange, Colors.green],
-                    ),
-                  ],
-                  borderRadius: 4,
                 ),
               ),
             ),
@@ -339,7 +273,176 @@ class _ChartGalleryState extends State<ChartGallery> {
             ),
             const SizedBox(height: 32),
 
-            // Minimal Style Line Chart
+            // === ADVANCED CHARTS ===
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Text(
+                '— Advanced / Finance Charts —',
+                style: Theme.of(
+                  context,
+                ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+              ),
+            ),
+            const SizedBox(height: 16),
+
+            // Candlestick Chart
+            _buildSection(
+              title: 'Candlestick Chart (Stock)',
+              child: SizedBox(
+                height: 250,
+                child: SnapCandleChart(
+                  candles: _generateCandles(),
+                  candleStyle: const SnapCandleStyle(
+                    showVolume: true,
+                    bodyWidth: 8,
+                  ),
+                  onTouch: (data) {
+                    setState(() {
+                      if (data.isTouched) {
+                        _touchInfo =
+                            'Candle: index=${data.index}, close=${data.barValue?.toStringAsFixed(2)}';
+                      }
+                    });
+                  },
+                ),
+              ),
+            ),
+            const SizedBox(height: 32),
+
+            // Waterfall Chart
+            _buildSection(
+              title: 'Waterfall Chart (P&L)',
+              child: SizedBox(
+                height: 220,
+                child: SnapWaterfallChart(
+                  bars: const [
+                    SnapWaterfallBar(value: 120, label: 'Revenue'),
+                    SnapWaterfallBar(value: -40, label: 'COGS'),
+                    SnapWaterfallBar(value: -25, label: 'OpEx'),
+                    SnapWaterfallBar(value: -10, label: 'Tax'),
+                    SnapWaterfallBar(value: 45, label: 'Profit', isTotal: true),
+                  ],
+                  onTouch: (data) {
+                    setState(() {
+                      if (data.isTouched) {
+                        _touchInfo =
+                            'Waterfall: index=${data.index}, value=${data.barValue?.toStringAsFixed(1)}';
+                      }
+                    });
+                  },
+                ),
+              ),
+            ),
+            const SizedBox(height: 32),
+
+            // Gauge Chart
+            _buildSection(
+              title: 'Gauge Chart (Risk Score)',
+              child: SizedBox(
+                height: 200,
+                child: SnapGaugeChart(
+                  data: const SnapGaugeData(
+                    value: 68,
+                    min: 0,
+                    max: 100,
+                    label: 'Portfolio Risk',
+                    segments: [
+                      SnapGaugeSegment(from: 0, to: 30, color: Colors.green),
+                      SnapGaugeSegment(from: 30, to: 60, color: Colors.orange),
+                      SnapGaugeSegment(from: 60, to: 100, color: Colors.red),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 32),
+
+            // Heatmap Chart
+            _buildSection(
+              title: 'Heatmap Chart (Sector Performance)',
+              child: SizedBox(
+                height: 180,
+                child: SnapHeatmapChart(
+                  cells: _generateHeatmapCells(),
+                  columns: 7,
+                  rows: 5,
+                  heatmapStyle: SnapHeatmapStyle(
+                    minColor: Colors.red.shade100,
+                    maxColor: Colors.green.shade700,
+                    cellRadius: 6,
+                    cellGap: 3,
+                  ),
+                  onTouch: (data) {
+                    setState(() {
+                      if (data.isTouched) {
+                        _touchInfo =
+                            'Heatmap: cell=${data.index}, value=${data.barValue?.toStringAsFixed(1)}';
+                      }
+                    });
+                  },
+                ),
+              ),
+            ),
+            const SizedBox(height: 32),
+
+            // Area Chart
+            _buildSection(
+              title: 'Area Chart (Portfolio Allocation)',
+              child: SizedBox(
+                height: 200,
+                child: SnapAreaChart(
+                  series: [
+                    SnapAreaSeries(
+                      spots: const [
+                        SnapSpot(0, 30),
+                        SnapSpot(1, 35),
+                        SnapSpot(2, 32),
+                        SnapSpot(3, 40),
+                        SnapSpot(4, 38),
+                        SnapSpot(5, 45),
+                      ],
+                      label: 'Equity',
+                      color: Colors.blue,
+                      opacity: 0.5,
+                    ),
+                    SnapAreaSeries(
+                      spots: const [
+                        SnapSpot(0, 20),
+                        SnapSpot(1, 18),
+                        SnapSpot(2, 22),
+                        SnapSpot(3, 19),
+                        SnapSpot(4, 24),
+                        SnapSpot(5, 21),
+                      ],
+                      label: 'Debt',
+                      color: Colors.green,
+                      opacity: 0.5,
+                    ),
+                    SnapAreaSeries(
+                      spots: const [
+                        SnapSpot(0, 10),
+                        SnapSpot(1, 12),
+                        SnapSpot(2, 8),
+                        SnapSpot(3, 11),
+                        SnapSpot(4, 9),
+                        SnapSpot(5, 13),
+                      ],
+                      label: 'Gold',
+                      color: Colors.amber,
+                      opacity: 0.5,
+                    ),
+                  ],
+                  curved: true,
+                  style: const SnapChartStyle(
+                    showGrid: true,
+                    gridColor: Color(0xFFEEEEEE),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 32),
+
+            // Minimal Sparkline
             _buildSection(
               title: 'Minimal Style (Sparkline)',
               child: SizedBox(
@@ -368,6 +471,47 @@ class _ChartGalleryState extends State<ChartGallery> {
         ),
       ),
     );
+  }
+
+  List<SnapCandle> _generateCandles() {
+    final candles = <SnapCandle>[];
+    double price = 150;
+    for (int i = 0; i < 20; i++) {
+      final change = (_random.nextDouble() - 0.48) * 8;
+      final open = price;
+      final close = price + change;
+      final high = max(open, close) + _random.nextDouble() * 4;
+      final low = min(open, close) - _random.nextDouble() * 4;
+      final volume = _random.nextDouble() * 1000000 + 500000;
+      candles.add(
+        SnapCandle(
+          date: i.toDouble(),
+          open: open,
+          high: high,
+          low: low,
+          close: close,
+          volume: volume,
+        ),
+      );
+      price = close;
+    }
+    return candles;
+  }
+
+  List<SnapHeatmapCell> _generateHeatmapCells() {
+    final cells = <SnapHeatmapCell>[];
+    for (int row = 0; row < 5; row++) {
+      for (int col = 0; col < 7; col++) {
+        cells.add(
+          SnapHeatmapCell(
+            col: col,
+            row: row,
+            value: _random.nextDouble() * 100,
+          ),
+        );
+      }
+    }
+    return cells;
   }
 
   Widget _buildSection({
