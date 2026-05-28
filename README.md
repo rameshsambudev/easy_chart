@@ -4,6 +4,16 @@ A dead-simple Flutter charting library. Beautiful charts with minimal code.
 
 Inspired by fl_chart but designed for developers who want charts without the boilerplate.
 
+## Screenshots
+
+<p float="left">
+  <img src="screenshots/Screenshot_1779946858.png" width="200" />
+  <img src="screenshots/Screenshot_1779946860.png" width="200" />
+  <img src="screenshots/Screenshot_1779946862.png" width="200" />
+  <img src="screenshots/Screenshot_1779946865.png" width="200" />
+  <img src="screenshots/Screenshot_1779946867.png" width="200" />
+</p>
+
 ## Features
 
 - **SnapLineChart** — Line/area charts with curves, fills, and multi-line support
