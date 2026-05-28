@@ -7,11 +7,11 @@ Inspired by fl_chart but designed for developers who want charts without the boi
 ## Screenshots
 
 <p float="left">
-  <img src="screenshots/Screenshot_1779946858.png" width="200" />
-  <img src="screenshots/Screenshot_1779946860.png" width="200" />
-  <img src="screenshots/Screenshot_1779946862.png" width="200" />
-  <img src="screenshots/Screenshot_1779946865.png" width="200" />
-  <img src="screenshots/Screenshot_1779946867.png" width="200" />
+  <img src="https://raw.githubusercontent.com/rameshsambudev/easy_chart/main/screenshots/Screenshot_1779946858.png" width="200" />
+  <img src="https://raw.githubusercontent.com/rameshsambudev/easy_chart/main/screenshots/Screenshot_1779946860.png" width="200" />
+  <img src="https://raw.githubusercontent.com/rameshsambudev/easy_chart/main/screenshots/Screenshot_1779946862.png" width="200" />
+  <img src="https://raw.githubusercontent.com/rameshsambudev/easy_chart/main/screenshots/Screenshot_1779946865.png" width="200" />
+  <img src="https://raw.githubusercontent.com/rameshsambudev/easy_chart/main/screenshots/Screenshot_1779946867.png" width="200" />
 </p>
 
 ## Features
