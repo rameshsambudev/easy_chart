@@ -6,10 +6,10 @@ Inspired by fl_chart but designed for developers who want charts without the boi
 
 ## Features
 
-- **EasyLineChart** — Line/area charts with curves, fills, and multi-line support
-- **EasyBarChart** — Vertical/horizontal bars with grouping
-- **EasyPieChart** — Pie and donut charts
-- **EasyScatterChart** — Scatter plots with multi-series
+- **SnapLineChart** — Line/area charts with curves, fills, and multi-line support
+- **SnapBarChart** — Vertical/horizontal bars with grouping
+- **SnapPieChart** — Pie and donut charts
+- **SnapScatterChart** — Scatter plots with multi-series
 
 All charts include:
 - Animated transitions when data changes
@@ -31,12 +31,12 @@ dependencies:
 ```dart
 import 'package:snap_chart/snap_chart.dart';
 
-EasyLineChart(
+SnapLineChart(
   spots: [
-    EasySpot(0, 3),
-    EasySpot(1, 1),
-    EasySpot(2, 4),
-    EasySpot(3, 2),
+    SnapSpot(0, 3),
+    SnapSpot(1, 1),
+    SnapSpot(2, 4),
+    SnapSpot(3, 2),
   ],
 )
 ```
@@ -44,7 +44,7 @@ EasyLineChart(
 ### Line Chart with fill and dots
 
 ```dart
-EasyLineChart(
+SnapLineChart(
   spots: myData,
   filled: true,
   showDots: true,
@@ -56,12 +56,12 @@ EasyLineChart(
 ### Bar Chart
 
 ```dart
-EasyBarChart(
+SnapBarChart(
   bars: [
-    EasyBar(value: 10, label: 'Jan'),
-    EasyBar(value: 15, label: 'Feb'),
-    EasyBar(value: 8, label: 'Mar'),
-    EasyBar(value: 12, label: 'Apr'),
+    SnapBar(value: 10, label: 'Jan'),
+    SnapBar(value: 15, label: 'Feb'),
+    SnapBar(value: 8, label: 'Mar'),
+    SnapBar(value: 12, label: 'Apr'),
   ],
 )
 ```
@@ -69,12 +69,12 @@ EasyBarChart(
 ### Pie Chart
 
 ```dart
-EasyPieChart(
+SnapPieChart(
   sections: [
-    EasyPieSection(value: 40, label: 'Flutter', color: Colors.blue),
-    EasyPieSection(value: 30, label: 'React', color: Colors.cyan),
-    EasyPieSection(value: 20, label: 'Native', color: Colors.green),
-    EasyPieSection(value: 10, label: 'Other', color: Colors.grey),
+    SnapPieSection(value: 40, label: 'Flutter', color: Colors.blue),
+    SnapPieSection(value: 30, label: 'React', color: Colors.cyan),
+    SnapPieSection(value: 20, label: 'Native', color: Colors.green),
+    SnapPieSection(value: 10, label: 'Other', color: Colors.grey),
   ],
 )
 ```
@@ -82,7 +82,7 @@ EasyPieChart(
 ### Donut Chart
 
 ```dart
-EasyPieChart(
+SnapPieChart(
   sections: mySections,
   holeRadius: 0.6,
 )
@@ -91,12 +91,12 @@ EasyPieChart(
 ### Scatter Chart
 
 ```dart
-EasyScatterChart(
+SnapScatterChart(
   spots: [
-    EasySpot(1, 2),
-    EasySpot(3, 4),
-    EasySpot(5, 1),
-    EasySpot(7, 6),
+    SnapSpot(1, 2),
+    SnapSpot(3, 4),
+    SnapSpot(5, 1),
+    SnapSpot(7, 6),
   ],
 )
 ```
@@ -104,7 +104,7 @@ EasyScatterChart(
 ### Touch Interactions
 
 ```dart
-EasyLineChart(
+SnapLineChart(
   spots: myData,
   onTouch: (touchData) {
     if (touchData.isTouched) {
@@ -117,9 +117,9 @@ EasyLineChart(
 ### Styling
 
 ```dart
-EasyLineChart(
+SnapLineChart(
   spots: myData,
-  style: EasyChartStyle(
+  style: SnapChartStyle(
     showGrid: true,
     gridColor: Colors.grey.shade200,
     showLabels: true,
@@ -131,9 +131,9 @@ EasyLineChart(
 ### Minimal Style (no grid, no labels)
 
 ```dart
-EasyLineChart(
+SnapLineChart(
   spots: myData,
-  style: EasyChartStyle.minimal,
+  style: SnapChartStyle.minimal,
 )
 ```
 
