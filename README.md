@@ -20,6 +20,11 @@ Inspired by fl_chart but designed for developers who want charts without the boi
 - **SnapBarChart** — Vertical/horizontal bars with grouping
 - **SnapPieChart** — Pie and donut charts
 - **SnapScatterChart** — Scatter plots with multi-series
+- **SnapCandleChart** — Stock/crypto candlestick charts with volume
+- **SnapWaterfallChart** — P&L breakdown, fund flow analysis
+- **SnapGaugeChart** — Risk scores, portfolio health meters
+- **SnapHeatmapChart** — Sector performance, contribution graphs
+- **SnapAreaChart** — Portfolio allocation over time
 
 All charts include:
 - Animated transitions when data changes
@@ -147,6 +152,88 @@ SnapLineChart(
 )
 ```
 
+### Candlestick Chart (Stocks/Crypto)
+
+```dart
+SnapCandleChart(
+  candles: [
+    SnapCandle(date: 0, open: 100, high: 110, low: 95, close: 105),
+    SnapCandle(date: 1, open: 105, high: 115, low: 100, close: 98),
+    SnapCandle(date: 2, open: 98, high: 108, low: 92, close: 106),
+  ],
+  candleStyle: SnapCandleStyle(showVolume: true),
+)
+```
+
+### Waterfall Chart (P&L Breakdown)
+
+```dart
+SnapWaterfallChart(
+  bars: [
+    SnapWaterfallBar(value: 100, label: 'Revenue'),
+    SnapWaterfallBar(value: -30, label: 'COGS'),
+    SnapWaterfallBar(value: -20, label: 'OpEx'),
+    SnapWaterfallBar(value: 50, label: 'Profit', isTotal: true),
+  ],
+)
+```
+
+### Gauge Chart (Risk Score / Portfolio Health)
+
+```dart
+SnapGaugeChart(
+  data: SnapGaugeData(
+    value: 72,
+    min: 0,
+    max: 100,
+    label: 'Risk Score',
+    segments: [
+      SnapGaugeSegment(from: 0, to: 30, color: Colors.green),
+      SnapGaugeSegment(from: 30, to: 70, color: Colors.orange),
+      SnapGaugeSegment(from: 70, to: 100, color: Colors.red),
+    ],
+  ),
+)
+```
+
+### Heatmap Chart (Sector Performance)
+
+```dart
+SnapHeatmapChart(
+  cells: [
+    SnapHeatmapCell(col: 0, row: 0, value: 5),
+    SnapHeatmapCell(col: 1, row: 0, value: 10),
+    SnapHeatmapCell(col: 2, row: 0, value: 3),
+    // ...
+  ],
+  columns: 7,
+  rows: 5,
+  heatmapStyle: SnapHeatmapStyle(
+    minColor: Colors.green.shade50,
+    maxColor: Colors.green.shade900,
+  ),
+)
+```
+
+### Area Chart (Portfolio Allocation)
+
+```dart
+SnapAreaChart(
+  series: [
+    SnapAreaSeries(
+      spots: [SnapSpot(0, 30), SnapSpot(1, 35), SnapSpot(2, 40)],
+      label: 'Equity',
+      color: Colors.blue,
+    ),
+    SnapAreaSeries(
+      spots: [SnapSpot(0, 20), SnapSpot(1, 18), SnapSpot(2, 22)],
+      label: 'Debt',
+      color: Colors.green,
+    ),
+  ],
+)
+```
+
 ## Comparison with fl_chart
 
 | Feature | fl_chart | snap_chart |
@@ -155,6 +242,11 @@ SnapLineChart(
 | Bar chart | ✅ | ✅ |
 | Pie chart | ✅ | ✅ |
 | Scatter chart | ✅ | ✅ |
+| Candlestick chart | ✅ | ✅ |
+| Waterfall chart | ❌ | ✅ |
+| Gauge chart | ❌ | ✅ |
+| Heatmap chart | ❌ | ✅ |
+| Area chart | ✅ | ✅ |
 | Minimum code for a chart | ~20 lines | ~3 lines |
 | Touch interactions | Complex setup | Single callback |
 | Animations | Manual | Automatic |
