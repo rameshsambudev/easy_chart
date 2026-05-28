@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
-import '../models/easy_pie_section.dart';
-import '../models/easy_style.dart';
-import '../models/easy_touch_data.dart';
-import '../painters/pie_chart_painter.dart';
+import '../models/snap_pie_section.dart';
+import '../models/snap_style.dart';
+import '../models/snap_touch_data.dart';
+import '../painters/snap_pie_chart_painter.dart';
 
 /// A simple pie/donut chart widget.
 ///
 /// ```dart
-/// EasyPieChart(
+/// SnapPieChart(
 ///   sections: [
-///     EasyPieSection(value: 40, label: 'A', color: Colors.blue),
-///     EasyPieSection(value: 30, label: 'B', color: Colors.red),
-///     EasyPieSection(value: 30, label: 'C', color: Colors.green),
+///     SnapPieSection(value: 40, label: 'A', color: Colors.blue),
+///     SnapPieSection(value: 30, label: 'B', color: Colors.red),
+///     SnapPieSection(value: 30, label: 'C', color: Colors.green),
 ///   ],
 /// )
 /// ```
-class EasyPieChart extends StatefulWidget {
+class SnapPieChart extends StatefulWidget {
   /// Sections of the pie.
-  final List<EasyPieSection> sections;
+  final List<SnapPieSection> sections;
 
   /// Hole radius for donut chart (0.0 = full pie, 0.7 = thin donut).
   final double holeRadius;
@@ -29,10 +29,10 @@ class EasyPieChart extends StatefulWidget {
   final double sectionSpace;
 
   /// Chart styling.
-  final EasyChartStyle style;
+  final SnapChartStyle style;
 
   /// Touch callback.
-  final ValueChanged<EasyTouchData>? onTouch;
+  final ValueChanged<SnapTouchData>? onTouch;
 
   /// Whether to show labels on sections.
   final bool showLabels;
@@ -40,23 +40,23 @@ class EasyPieChart extends StatefulWidget {
   /// Whether to show percentage values.
   final bool showPercentage;
 
-  const EasyPieChart({
+  const SnapPieChart({
     super.key,
     required this.sections,
     this.holeRadius = 0.0,
     this.startAngle = -90,
     this.sectionSpace = 2,
-    this.style = const EasyChartStyle(),
+    this.style = const SnapChartStyle(),
     this.onTouch,
     this.showLabels = true,
     this.showPercentage = false,
   });
 
   @override
-  State<EasyPieChart> createState() => _EasyPieChartState();
+  State<SnapPieChart> createState() => _SnapPieChartState();
 }
 
-class _EasyPieChartState extends State<EasyPieChart>
+class _SnapPieChartState extends State<SnapPieChart>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
@@ -77,7 +77,7 @@ class _EasyPieChartState extends State<EasyPieChart>
   }
 
   @override
-  void didUpdateWidget(EasyPieChart oldWidget) {
+  void didUpdateWidget(SnapPieChart oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.sections != widget.sections) {
       _controller.forward(from: 0.0);
@@ -109,14 +109,14 @@ class _EasyPieChartState extends State<EasyPieChart>
       },
       onTapUp: (_) {
         setState(() => _touchedIndex = null);
-        widget.onTouch?.call(EasyTouchData.none);
+        widget.onTouch?.call(SnapTouchData.none);
       },
       child: AnimatedBuilder(
         animation: _animation,
         builder: (context, _) {
           return CustomPaint(
             size: Size.infinite,
-            painter: EasyPieChartPainter(
+            painter: SnapPieChartPainter(
               sections: widget.sections,
               animationValue: _animation.value,
               holeRadius: widget.holeRadius,
@@ -152,13 +152,11 @@ class _EasyPieChartState extends State<EasyPieChart>
       final sweep = widget.sections[i].value / total * 360;
       if (angle >= cumulative && angle < cumulative + sweep) {
         setState(() => _touchedIndex = i);
-        widget.onTouch?.call(
-          EasyTouchData(
-            index: i,
-            sectionValue: widget.sections[i].value,
-            isTouched: true,
-          ),
-        );
+        widget.onTouch?.call(SnapTouchData(
+          index: i,
+          sectionValue: widget.sections[i].value,
+          isTouched: true,
+        ));
         return;
       }
       cumulative += sweep;

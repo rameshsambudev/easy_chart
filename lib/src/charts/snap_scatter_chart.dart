@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import '../models/easy_spot.dart';
-import '../models/easy_style.dart';
-import '../models/easy_touch_data.dart';
-import '../painters/scatter_chart_painter.dart';
+import '../models/snap_spot.dart';
+import '../models/snap_style.dart';
+import '../models/snap_touch_data.dart';
+import '../painters/snap_scatter_chart_painter.dart';
 
 /// A simple scatter chart widget.
 ///
 /// ```dart
-/// EasyScatterChart(
-///   spots: [EasySpot(1, 2), EasySpot(3, 4), EasySpot(5, 1)],
+/// SnapScatterChart(
+///   spots: [SnapSpot(1, 2), SnapSpot(3, 4), SnapSpot(5, 1)],
 /// )
 /// ```
-class EasyScatterChart extends StatefulWidget {
+class SnapScatterChart extends StatefulWidget {
   /// Data points to plot.
-  final List<EasySpot> spots;
+  final List<SnapSpot> spots;
 
   /// Dot radius.
   final double dotRadius;
@@ -22,16 +22,16 @@ class EasyScatterChart extends StatefulWidget {
   final Color? dotColor;
 
   /// Multiple series support.
-  final List<List<EasySpot>>? multiSeries;
+  final List<List<SnapSpot>>? multiSeries;
 
   /// Colors for each series.
   final List<Color>? seriesColors;
 
   /// Chart styling.
-  final EasyChartStyle style;
+  final SnapChartStyle style;
 
   /// Touch callback.
-  final ValueChanged<EasyTouchData>? onTouch;
+  final ValueChanged<SnapTouchData>? onTouch;
 
   /// Min/max overrides.
   final double? minX;
@@ -39,14 +39,14 @@ class EasyScatterChart extends StatefulWidget {
   final double? minY;
   final double? maxY;
 
-  const EasyScatterChart({
+  const SnapScatterChart({
     super.key,
     this.spots = const [],
     this.dotRadius = 6.0,
     this.dotColor,
     this.multiSeries,
     this.seriesColors,
-    this.style = const EasyChartStyle(),
+    this.style = const SnapChartStyle(),
     this.onTouch,
     this.minX,
     this.maxX,
@@ -55,16 +55,16 @@ class EasyScatterChart extends StatefulWidget {
   });
 
   @override
-  State<EasyScatterChart> createState() => _EasyScatterChartState();
+  State<SnapScatterChart> createState() => _SnapScatterChartState();
 }
 
-class _EasyScatterChartState extends State<EasyScatterChart>
+class _SnapScatterChartState extends State<SnapScatterChart>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
   int? _touchedIndex;
 
-  List<List<EasySpot>> get _allSeries => widget.multiSeries ?? [widget.spots];
+  List<List<SnapSpot>> get _allSeries => widget.multiSeries ?? [widget.spots];
 
   @override
   void initState() {
@@ -81,7 +81,7 @@ class _EasyScatterChartState extends State<EasyScatterChart>
   }
 
   @override
-  void didUpdateWidget(EasyScatterChart oldWidget) {
+  void didUpdateWidget(SnapScatterChart oldWidget) {
     super.didUpdateWidget(oldWidget);
     _controller.forward(from: 0.0);
   }
@@ -109,14 +109,14 @@ class _EasyScatterChartState extends State<EasyScatterChart>
           _handleTouch(details.localPosition, context.size ?? Size.zero),
       onTapUp: (_) {
         setState(() => _touchedIndex = null);
-        widget.onTouch?.call(EasyTouchData.none);
+        widget.onTouch?.call(SnapTouchData.none);
       },
       child: AnimatedBuilder(
         animation: _animation,
         builder: (context, _) {
           return CustomPaint(
             size: Size.infinite,
-            painter: EasyScatterChartPainter(
+            painter: SnapScatterChartPainter(
               series: _allSeries,
               animationValue: _animation.value,
               colors: colors,
@@ -159,13 +159,11 @@ class _EasyScatterChartState extends State<EasyScatterChart>
 
     if (closestIdx >= 0) {
       setState(() => _touchedIndex = closestIdx);
-      widget.onTouch?.call(
-        EasyTouchData(
-          index: closestIdx,
-          spot: allSpots[closestIdx],
-          isTouched: true,
-        ),
-      );
+      widget.onTouch?.call(SnapTouchData(
+        index: closestIdx,
+        spot: allSpots[closestIdx],
+        isTouched: true,
+      ));
     }
   }
 

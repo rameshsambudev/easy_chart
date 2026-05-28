@@ -3,7 +3,7 @@ import 'package:easy_chart_example/main.dart';
 
 void main() {
   testWidgets('App renders chart gallery', (WidgetTester tester) async {
-    await tester.pumpWidget(const EasyChartExampleApp());
-    expect(find.text('EasyChart Gallery'), findsOneWidget);
+    await tester.pumpWidget(const SnapChartExampleApp());
+    expect(find.text('SnapChart Gallery'), findsOneWidget);
   });
 }

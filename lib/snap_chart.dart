@@ -3,21 +3,21 @@
 /// Beautiful charts with minimal code. Just pass your data and go.
 ///
 /// ```dart
-/// EasyLineChart(
-///   spots: [EasySpot(0, 3), EasySpot(1, 1), EasySpot(2, 4)],
+/// SnapLineChart(
+///   spots: [SnapSpot(0, 3), SnapSpot(1, 1), SnapSpot(2, 4)],
 /// )
 /// ```
 library snap_chart;
 
 // Models
-export 'src/models/easy_spot.dart';
-export 'src/models/easy_bar_data.dart';
-export 'src/models/easy_pie_section.dart';
-export 'src/models/easy_touch_data.dart';
-export 'src/models/easy_style.dart';
+export 'src/models/snap_spot.dart';
+export 'src/models/snap_bar_data.dart';
+export 'src/models/snap_pie_section.dart';
+export 'src/models/snap_touch_data.dart';
+export 'src/models/snap_style.dart';
 
 // Charts
-export 'src/charts/easy_line_chart.dart';
-export 'src/charts/easy_bar_chart.dart';
-export 'src/charts/easy_pie_chart.dart';
-export 'src/charts/easy_scatter_chart.dart';
+export 'src/charts/snap_line_chart.dart';
+export 'src/charts/snap_bar_chart.dart';
+export 'src/charts/snap_pie_chart.dart';
+export 'src/charts/snap_scatter_chart.dart';

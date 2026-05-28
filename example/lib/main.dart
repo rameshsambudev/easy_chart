@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:snap_chart/snap_chart.dart';
 
 void main() {
-  runApp(const EasyChartExampleApp());
+  runApp(const SnapChartExampleApp());
 }
 
-class EasyChartExampleApp extends StatelessWidget {
-  const EasyChartExampleApp({super.key});
+class SnapChartExampleApp extends StatelessWidget {
+  const SnapChartExampleApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'EasyChart Demo',
+      title: 'SnapChart Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
@@ -34,33 +34,31 @@ class _ChartGalleryState extends State<ChartGallery> {
   String _touchInfo = 'Tap or drag on any chart';
   final _random = Random();
 
-  // Line chart data
-  List<EasySpot> _lineSpots = [
-    const EasySpot(0, 3),
-    const EasySpot(1, 1),
-    const EasySpot(2, 4),
-    const EasySpot(3, 1.5),
-    const EasySpot(4, 5),
-    const EasySpot(5, 2.5),
-    const EasySpot(6, 4.5),
+  List<SnapSpot> _lineSpots = [
+    const SnapSpot(0, 3),
+    const SnapSpot(1, 1),
+    const SnapSpot(2, 4),
+    const SnapSpot(3, 1.5),
+    const SnapSpot(4, 5),
+    const SnapSpot(5, 2.5),
+    const SnapSpot(6, 4.5),
   ];
 
-  // Bar chart data
-  List<EasyBar> _bars = const [
-    EasyBar(value: 10, label: 'Mon'),
-    EasyBar(value: 15, label: 'Tue'),
-    EasyBar(value: 8, label: 'Wed'),
-    EasyBar(value: 12, label: 'Thu'),
-    EasyBar(value: 18, label: 'Fri'),
-    EasyBar(value: 6, label: 'Sat'),
-    EasyBar(value: 9, label: 'Sun'),
+  List<SnapBar> _bars = const [
+    SnapBar(value: 10, label: 'Mon'),
+    SnapBar(value: 15, label: 'Tue'),
+    SnapBar(value: 8, label: 'Wed'),
+    SnapBar(value: 12, label: 'Thu'),
+    SnapBar(value: 18, label: 'Fri'),
+    SnapBar(value: 6, label: 'Sat'),
+    SnapBar(value: 9, label: 'Sun'),
   ];
 
   void _randomizeLineData() {
     setState(() {
       _lineSpots = List.generate(
         7,
-        (i) => EasySpot(i.toDouble(), _random.nextDouble() * 6),
+        (i) => SnapSpot(i.toDouble(), _random.nextDouble() * 6),
       );
     });
   }
@@ -70,7 +68,7 @@ class _ChartGalleryState extends State<ChartGallery> {
       final labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
       _bars = List.generate(
         7,
-        (i) => EasyBar(value: _random.nextDouble() * 20 + 2, label: labels[i]),
+        (i) => SnapBar(value: _random.nextDouble() * 20 + 2, label: labels[i]),
       );
     });
   }
@@ -79,7 +77,7 @@ class _ChartGalleryState extends State<ChartGallery> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('EasyChart Gallery'),
+        title: const Text('SnapChart Gallery'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: SingleChildScrollView(
@@ -87,7 +85,6 @@ class _ChartGalleryState extends State<ChartGallery> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Touch info
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(12),
@@ -111,7 +108,7 @@ class _ChartGalleryState extends State<ChartGallery> {
               ),
               child: SizedBox(
                 height: 200,
-                child: EasyLineChart(
+                child: SnapLineChart(
                   spots: _lineSpots,
                   curved: true,
                   filled: true,
@@ -136,26 +133,26 @@ class _ChartGalleryState extends State<ChartGallery> {
               title: 'Multi-Line Chart',
               child: SizedBox(
                 height: 200,
-                child: EasyLineChart(
+                child: SnapLineChart(
                   multiLines: [
                     const [
-                      EasySpot(0, 2),
-                      EasySpot(1, 4),
-                      EasySpot(2, 3),
-                      EasySpot(3, 5),
-                      EasySpot(4, 4),
+                      SnapSpot(0, 2),
+                      SnapSpot(1, 4),
+                      SnapSpot(2, 3),
+                      SnapSpot(3, 5),
+                      SnapSpot(4, 4),
                     ],
                     const [
-                      EasySpot(0, 1),
-                      EasySpot(1, 2),
-                      EasySpot(2, 4),
-                      EasySpot(3, 3),
-                      EasySpot(4, 6),
+                      SnapSpot(0, 1),
+                      SnapSpot(1, 2),
+                      SnapSpot(2, 4),
+                      SnapSpot(3, 3),
+                      SnapSpot(4, 6),
                     ],
                   ],
                   curved: true,
                   lineWidth: 2.5,
-                  style: const EasyChartStyle(
+                  style: const SnapChartStyle(
                     showGrid: true,
                     gridColor: Color(0xFFEEEEEE),
                   ),
@@ -173,7 +170,7 @@ class _ChartGalleryState extends State<ChartGallery> {
               ),
               child: SizedBox(
                 height: 200,
-                child: EasyBarChart(
+                child: SnapBarChart(
                   bars: _bars,
                   borderRadius: 6,
                   onTouch: (data) {
@@ -194,24 +191,24 @@ class _ChartGalleryState extends State<ChartGallery> {
               title: 'Grouped Bar Chart',
               child: SizedBox(
                 height: 200,
-                child: EasyBarChart(
+                child: SnapBarChart(
                   bars: const [
-                    EasyBar(
+                    SnapBar(
                       label: 'Q1',
                       groupValues: [12, 8, 15],
                       groupColors: [Colors.blue, Colors.orange, Colors.green],
                     ),
-                    EasyBar(
+                    SnapBar(
                       label: 'Q2',
                       groupValues: [10, 14, 9],
                       groupColors: [Colors.blue, Colors.orange, Colors.green],
                     ),
-                    EasyBar(
+                    SnapBar(
                       label: 'Q3',
                       groupValues: [16, 11, 13],
                       groupColors: [Colors.blue, Colors.orange, Colors.green],
                     ),
-                    EasyBar(
+                    SnapBar(
                       label: 'Q4',
                       groupValues: [14, 17, 10],
                       groupColors: [Colors.blue, Colors.orange, Colors.green],
@@ -228,29 +225,29 @@ class _ChartGalleryState extends State<ChartGallery> {
               title: 'Pie Chart',
               child: SizedBox(
                 height: 250,
-                child: EasyPieChart(
+                child: SnapPieChart(
                   sections: const [
-                    EasyPieSection(
+                    SnapPieSection(
                       value: 35,
                       label: 'Flutter',
                       color: Colors.blue,
                     ),
-                    EasyPieSection(
+                    SnapPieSection(
                       value: 25,
                       label: 'React',
                       color: Colors.cyan,
                     ),
-                    EasyPieSection(
+                    SnapPieSection(
                       value: 20,
                       label: 'Native',
                       color: Colors.orange,
                     ),
-                    EasyPieSection(
+                    SnapPieSection(
                       value: 15,
                       label: 'Kotlin',
                       color: Colors.purple,
                     ),
-                    EasyPieSection(
+                    SnapPieSection(
                       value: 5,
                       label: 'Other',
                       color: Colors.grey,
@@ -275,24 +272,24 @@ class _ChartGalleryState extends State<ChartGallery> {
               title: 'Donut Chart',
               child: SizedBox(
                 height: 250,
-                child: EasyPieChart(
+                child: SnapPieChart(
                   sections: const [
-                    EasyPieSection(
+                    SnapPieSection(
                       value: 40,
                       label: 'Dart',
                       color: Colors.teal,
                     ),
-                    EasyPieSection(
+                    SnapPieSection(
                       value: 30,
                       label: 'Swift',
                       color: Colors.deepOrange,
                     ),
-                    EasyPieSection(
+                    SnapPieSection(
                       value: 20,
                       label: 'Kotlin',
                       color: Colors.indigo,
                     ),
-                    EasyPieSection(
+                    SnapPieSection(
                       value: 10,
                       label: 'Rust',
                       color: Colors.brown,
@@ -310,22 +307,22 @@ class _ChartGalleryState extends State<ChartGallery> {
               title: 'Scatter Chart',
               child: SizedBox(
                 height: 200,
-                child: EasyScatterChart(
+                child: SnapScatterChart(
                   multiSeries: [
-                    [
-                      const EasySpot(1, 2),
-                      const EasySpot(2, 4.5),
-                      const EasySpot(3, 1.5),
-                      const EasySpot(4, 5),
-                      const EasySpot(5, 3),
-                      const EasySpot(6, 4),
+                    const [
+                      SnapSpot(1, 2),
+                      SnapSpot(2, 4.5),
+                      SnapSpot(3, 1.5),
+                      SnapSpot(4, 5),
+                      SnapSpot(5, 3),
+                      SnapSpot(6, 4),
                     ],
-                    [
-                      const EasySpot(1.5, 3),
-                      const EasySpot(2.5, 1),
-                      const EasySpot(3.5, 4),
-                      const EasySpot(4.5, 2),
-                      const EasySpot(5.5, 5.5),
+                    const [
+                      SnapSpot(1.5, 3),
+                      SnapSpot(2.5, 1),
+                      SnapSpot(3.5, 4),
+                      SnapSpot(4.5, 2),
+                      SnapSpot(5.5, 5.5),
                     ],
                   ],
                   dotRadius: 8,
@@ -347,22 +344,22 @@ class _ChartGalleryState extends State<ChartGallery> {
               title: 'Minimal Style (Sparkline)',
               child: SizedBox(
                 height: 80,
-                child: EasyLineChart(
+                child: SnapLineChart(
                   spots: const [
-                    EasySpot(0, 2),
-                    EasySpot(1, 4),
-                    EasySpot(2, 3),
-                    EasySpot(3, 5),
-                    EasySpot(4, 3.5),
-                    EasySpot(5, 6),
-                    EasySpot(6, 5),
-                    EasySpot(7, 7),
+                    SnapSpot(0, 2),
+                    SnapSpot(1, 4),
+                    SnapSpot(2, 3),
+                    SnapSpot(3, 5),
+                    SnapSpot(4, 3.5),
+                    SnapSpot(5, 6),
+                    SnapSpot(6, 5),
+                    SnapSpot(7, 7),
                   ],
                   curved: true,
                   filled: true,
                   fillOpacity: 0.3,
                   lineWidth: 2,
-                  style: EasyChartStyle.minimal,
+                  style: SnapChartStyle.minimal,
                 ),
               ),
             ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// Styling configuration for charts. All fields are optional with sensible defaults.
-class EasyChartStyle {
+class SnapChartStyle {
   /// Background color of the chart area.
   final Color? backgroundColor;
 
@@ -29,7 +29,7 @@ class EasyChartStyle {
   /// Animation curve.
   final Curve animationCurve;
 
-  const EasyChartStyle({
+  const SnapChartStyle({
     this.backgroundColor,
     this.showGrid = true,
     this.gridColor = const Color(0xFFE0E0E0),
@@ -42,7 +42,7 @@ class EasyChartStyle {
   });
 
   /// No grid, no labels, no border. Just the chart.
-  static const minimal = EasyChartStyle(
+  static const minimal = SnapChartStyle(
     showGrid: false,
     showLabels: false,
     showBorder: false,

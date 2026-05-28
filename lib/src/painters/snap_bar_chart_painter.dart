@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import '../models/easy_bar_data.dart';
-import '../models/easy_style.dart';
+import '../models/snap_bar_data.dart';
+import '../models/snap_style.dart';
 
-class EasyBarChartPainter extends CustomPainter {
-  final List<EasyBar> bars;
-  final List<EasyBar> oldBars;
+class SnapBarChartPainter extends CustomPainter {
+  final List<SnapBar> bars;
+  final List<SnapBar> oldBars;
   final double animationValue;
   final Color defaultColor;
   final double borderRadius;
   final double spacing;
   final bool horizontal;
-  final EasyChartStyle style;
+  final SnapChartStyle style;
   final int? touchedIndex;
   final double? maxValue;
 
-  EasyBarChartPainter({
+  SnapBarChartPainter({
     required this.bars,
     required this.oldBars,
     required this.animationValue,
@@ -31,7 +31,6 @@ class EasyBarChartPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     if (bars.isEmpty) return;
 
-    // Draw background
     if (style.backgroundColor != null) {
       canvas.drawRect(
         Rect.fromLTWH(0, 0, size.width, size.height),
@@ -39,7 +38,6 @@ class EasyBarChartPainter extends CustomPainter {
       );
     }
 
-    // Draw grid
     if (style.showGrid) {
       _drawGrid(canvas, size);
     }
@@ -60,15 +58,7 @@ class EasyBarChartPainter extends CustomPainter {
 
       if (bar.isGrouped) {
         _drawGroupedBar(
-          canvas,
-          size,
-          bar,
-          i,
-          barSlotWidth,
-          barWidth,
-          max,
-          totalHeight,
-        );
+            canvas, size, bar, i, barSlotWidth, barWidth, max, totalHeight);
       } else {
         final oldValue = oldBar.value;
         final newValue = bar.value;
@@ -94,23 +84,14 @@ class EasyBarChartPainter extends CustomPainter {
         canvas.drawRRect(rect, Paint()..color = actualColor);
       }
 
-      // Draw label
       if (style.showLabels && bar.label != null) {
         _drawLabel(canvas, size, bar.label!, i, barSlotWidth, totalHeight);
       }
     }
   }
 
-  void _drawGroupedBar(
-    Canvas canvas,
-    Size size,
-    EasyBar bar,
-    int index,
-    double slotWidth,
-    double barWidth,
-    double max,
-    double totalHeight,
-  ) {
+  void _drawGroupedBar(Canvas canvas, Size size, SnapBar bar, int index,
+      double slotWidth, double barWidth, double max, double totalHeight) {
     final groupCount = bar.allValues.length;
     final singleBarWidth = barWidth / groupCount;
     final defaultGroupColors = [
@@ -148,14 +129,8 @@ class EasyBarChartPainter extends CustomPainter {
     }
   }
 
-  void _drawLabel(
-    Canvas canvas,
-    Size size,
-    String label,
-    int index,
-    double slotWidth,
-    double totalHeight,
-  ) {
+  void _drawLabel(Canvas canvas, Size size, String label, int index,
+      double slotWidth, double totalHeight) {
     final textStyle =
         style.labelStyle ?? const TextStyle(color: Colors.grey, fontSize: 10);
     final textSpan = TextSpan(text: label, style: textStyle);
@@ -179,5 +154,5 @@ class EasyBarChartPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant EasyBarChartPainter oldDelegate) => true;
+  bool shouldRepaint(covariant SnapBarChartPainter oldDelegate) => true;
 }

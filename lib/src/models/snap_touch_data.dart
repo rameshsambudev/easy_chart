@@ -1,12 +1,12 @@
-import 'easy_spot.dart';
+import 'snap_spot.dart';
 
 /// Touch event data returned in callbacks.
-class EasyTouchData {
+class SnapTouchData {
   /// Index of the touched element (-1 if none).
   final int index;
 
   /// The spot that was touched (for line/scatter charts).
-  final EasySpot? spot;
+  final SnapSpot? spot;
 
   /// The bar value that was touched (for bar charts).
   final double? barValue;
@@ -17,7 +17,7 @@ class EasyTouchData {
   /// Whether something is currently being touched.
   final bool isTouched;
 
-  const EasyTouchData({
+  const SnapTouchData({
     this.index = -1,
     this.spot,
     this.barValue,
@@ -26,5 +26,5 @@ class EasyTouchData {
   });
 
   /// Nothing is touched.
-  static const none = EasyTouchData();
+  static const none = SnapTouchData();
 }

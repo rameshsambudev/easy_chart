@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 /// A single bar (or group of bars) in a bar chart.
 ///
 /// ```dart
-/// EasyBar(value: 10, label: 'Jan')
+/// SnapBar(value: 10, label: 'Jan')
 /// ```
-class EasyBar {
+class SnapBar {
   /// The value (height) of this bar.
   final double value;
 
@@ -21,7 +21,7 @@ class EasyBar {
   /// Colors for grouped bars.
   final List<Color>? groupColors;
 
-  const EasyBar({
+  const SnapBar({
     this.value = 0,
     this.label,
     this.color,

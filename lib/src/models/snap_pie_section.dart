@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 /// A section of a pie chart.
 ///
 /// ```dart
-/// EasyPieSection(value: 40, label: 'Flutter', color: Colors.blue)
+/// SnapPieSection(value: 40, label: 'Flutter', color: Colors.blue)
 /// ```
-class EasyPieSection {
+class SnapPieSection {
   /// The value of this section. Percentage is calculated automatically.
   final double value;
 
@@ -21,7 +21,7 @@ class EasyPieSection {
   /// Whether this section is "exploded" (pulled out).
   final bool exploded;
 
-  const EasyPieSection({
+  const SnapPieSection({
     required this.value,
     this.label,
     this.color,

@@ -1,10 +1,10 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import '../models/easy_pie_section.dart';
-import '../models/easy_style.dart';
+import '../models/snap_pie_section.dart';
+import '../models/snap_style.dart';
 
-class EasyPieChartPainter extends CustomPainter {
-  final List<EasyPieSection> sections;
+class SnapPieChartPainter extends CustomPainter {
+  final List<SnapPieSection> sections;
   final double animationValue;
   final double holeRadius;
   final double startAngle;
@@ -13,9 +13,9 @@ class EasyPieChartPainter extends CustomPainter {
   final int? touchedIndex;
   final bool showLabels;
   final bool showPercentage;
-  final EasyChartStyle style;
+  final SnapChartStyle style;
 
-  EasyPieChartPainter({
+  SnapPieChartPainter({
     required this.sections,
     required this.animationValue,
     required this.holeRadius,
@@ -48,16 +48,17 @@ class EasyPieChartPainter extends CustomPainter {
       final isTouched = touchedIndex == i;
       final actualRadius = isTouched ? sectionRadius * 1.05 : sectionRadius;
 
-      // Explode offset
       Offset explodeOffset = Offset.zero;
       if (section.exploded || isTouched) {
         final midAngle = currentAngle + sweepAngle / 2;
-        explodeOffset = Offset(math.cos(midAngle) * 8, math.sin(midAngle) * 8);
+        explodeOffset = Offset(
+          math.cos(midAngle) * 8,
+          math.sin(midAngle) * 8,
+        );
       }
 
       final sectionCenter = center + explodeOffset;
 
-      // Draw section
       final path = Path();
       if (holeRadius > 0) {
         final innerRadius = actualRadius * holeRadius;
@@ -87,17 +88,9 @@ class EasyPieChartPainter extends CustomPainter {
 
       canvas.drawPath(path, Paint()..color = color);
 
-      // Draw label
       if (showLabels && animationValue > 0.8) {
-        _drawLabel(
-          canvas,
-          sectionCenter,
-          actualRadius,
-          currentAngle,
-          sweepAngle,
-          section,
-          total,
-        );
+        _drawLabel(canvas, sectionCenter, actualRadius, currentAngle,
+            sweepAngle, section, total);
       }
 
       currentAngle += sweepAngle;
@@ -105,14 +98,13 @@ class EasyPieChartPainter extends CustomPainter {
   }
 
   void _drawLabel(
-    Canvas canvas,
-    Offset center,
-    double radius,
-    double startAngle,
-    double sweepAngle,
-    EasyPieSection section,
-    double total,
-  ) {
+      Canvas canvas,
+      Offset center,
+      double radius,
+      double startAngle,
+      double sweepAngle,
+      SnapPieSection section,
+      double total) {
     final midAngle = startAngle + sweepAngle / 2;
     final labelRadius = radius * 0.7;
     final labelPos = Offset(
@@ -131,13 +123,9 @@ class EasyPieChartPainter extends CustomPainter {
 
     if (text.isEmpty) return;
 
-    final textStyle =
-        style.labelStyle ??
+    final textStyle = style.labelStyle ??
         const TextStyle(
-          color: Colors.white,
-          fontSize: 11,
-          fontWeight: FontWeight.bold,
-        );
+            color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold);
     final textSpan = TextSpan(text: text, style: textStyle);
     final textPainter = TextPainter(
       text: textSpan,
@@ -155,5 +143,5 @@ class EasyPieChartPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant EasyPieChartPainter oldDelegate) => true;
+  bool shouldRepaint(covariant SnapPieChartPainter oldDelegate) => true;
 }

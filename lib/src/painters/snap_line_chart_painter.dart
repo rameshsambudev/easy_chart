@@ -1,11 +1,11 @@
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
-import '../models/easy_spot.dart';
-import '../models/easy_style.dart';
+import '../models/snap_spot.dart';
+import '../models/snap_style.dart';
 
-class EasyLineChartPainter extends CustomPainter {
-  final List<List<EasySpot>> oldLines;
-  final List<List<EasySpot>> newLines;
+class SnapLineChartPainter extends CustomPainter {
+  final List<List<SnapSpot>> oldLines;
+  final List<List<SnapSpot>> newLines;
   final double animationValue;
   final List<Color> colors;
   final double lineWidth;
@@ -14,7 +14,7 @@ class EasyLineChartPainter extends CustomPainter {
   final double fillOpacity;
   final bool showDots;
   final double dotRadius;
-  final EasyChartStyle style;
+  final SnapChartStyle style;
   final int? touchedIndex;
   final Offset? touchPosition;
   final bool showTooltip;
@@ -23,7 +23,7 @@ class EasyLineChartPainter extends CustomPainter {
   final double? minY;
   final double? maxY;
 
-  EasyLineChartPainter({
+  SnapLineChartPainter({
     required this.oldLines,
     required this.newLines,
     required this.animationValue,
@@ -53,7 +53,6 @@ class EasyLineChartPainter extends CustomPainter {
     final yRange = bounds[3] - bounds[1];
     if (xRange == 0 || yRange == 0) return;
 
-    // Draw background
     if (style.backgroundColor != null) {
       canvas.drawRect(
         Rect.fromLTWH(0, 0, size.width, size.height),
@@ -61,12 +60,10 @@ class EasyLineChartPainter extends CustomPainter {
       );
     }
 
-    // Draw grid
     if (style.showGrid) {
       _drawGrid(canvas, size, bounds);
     }
 
-    // Draw border
     if (style.showBorder) {
       canvas.drawRect(
         Rect.fromLTWH(0, 0, size.width, size.height),
@@ -77,7 +74,6 @@ class EasyLineChartPainter extends CustomPainter {
       );
     }
 
-    // Draw each line
     for (int lineIdx = 0; lineIdx < newLines.length; lineIdx++) {
       final newSpots = newLines[lineIdx];
       final oldSpots = lineIdx < oldLines.length ? oldLines[lineIdx] : newSpots;
@@ -88,21 +84,17 @@ class EasyLineChartPainter extends CustomPainter {
 
       if (points.length < 2) continue;
 
-      // Draw fill
       if (filled) {
         _drawFill(canvas, size, points, color);
       }
 
-      // Draw line
       _drawLine(canvas, points, color);
 
-      // Draw dots
       if (showDots) {
         _drawDots(canvas, points, color);
       }
     }
 
-    // Draw touch indicator
     if (touchedIndex != null && touchPosition != null && showTooltip) {
       _drawTouchIndicator(canvas, size);
     }
@@ -140,11 +132,11 @@ class EasyLineChartPainter extends CustomPainter {
     path.lineTo(points.last.dx, size.height);
     path.close();
 
-    final gradient =
-        ui.Gradient.linear(const Offset(0, 0), Offset(0, size.height), [
-      color.withValues(alpha: fillOpacity),
-      color.withValues(alpha: 0),
-    ]);
+    final gradient = ui.Gradient.linear(
+      const Offset(0, 0),
+      Offset(0, size.height),
+      [color.withValues(alpha: fillOpacity), color.withValues(alpha: 0)],
+    );
 
     canvas.drawPath(path, Paint()..shader = gradient);
   }
@@ -201,32 +193,26 @@ class EasyLineChartPainter extends CustomPainter {
     );
   }
 
-  List<EasySpot> _interpolateSpots(
-    List<EasySpot> oldSpots,
-    List<EasySpot> newSpots,
-  ) {
+  List<SnapSpot> _interpolateSpots(
+      List<SnapSpot> oldSpots, List<SnapSpot> newSpots) {
     if (animationValue >= 1.0) return newSpots;
     if (oldSpots.isEmpty) return newSpots;
 
     final maxLen =
         oldSpots.length > newSpots.length ? oldSpots.length : newSpots.length;
-    final result = <EasySpot>[];
+    final result = <SnapSpot>[];
 
     for (int i = 0; i < maxLen; i++) {
       final oldIdx = i < oldSpots.length ? i : oldSpots.length - 1;
       final newIdx = i < newSpots.length ? i : newSpots.length - 1;
       result.add(
-        EasySpot.lerp(oldSpots[oldIdx], newSpots[newIdx], animationValue),
-      );
+          SnapSpot.lerp(oldSpots[oldIdx], newSpots[newIdx], animationValue));
     }
     return result;
   }
 
   List<Offset> _spotsToPoints(
-    List<EasySpot> spots,
-    Size size,
-    List<double> bounds,
-  ) {
+      List<SnapSpot> spots, Size size, List<double> bounds) {
     final xRange = bounds[2] - bounds[0];
     final yRange = bounds[3] - bounds[1];
     return spots.map((spot) {
@@ -254,5 +240,5 @@ class EasyLineChartPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant EasyLineChartPainter oldDelegate) => true;
+  bool shouldRepaint(covariant SnapLineChartPainter oldDelegate) => true;
 }

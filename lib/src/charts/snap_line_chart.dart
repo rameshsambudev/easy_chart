@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
-import '../models/easy_spot.dart';
-import '../models/easy_style.dart';
-import '../models/easy_touch_data.dart';
-import '../painters/line_chart_painter.dart';
+import '../models/snap_spot.dart';
+import '../models/snap_style.dart';
+import '../models/snap_touch_data.dart';
+import '../painters/snap_line_chart_painter.dart';
 
 /// A simple line chart widget.
 ///
 /// ```dart
-/// EasyLineChart(
-///   spots: [EasySpot(0, 3), EasySpot(1, 1), EasySpot(2, 4)],
+/// SnapLineChart(
+///   spots: [SnapSpot(0, 3), SnapSpot(1, 1), SnapSpot(2, 4)],
 /// )
 /// ```
-class EasyLineChart extends StatefulWidget {
+class SnapLineChart extends StatefulWidget {
   /// Data points for the line.
-  final List<EasySpot> spots;
+  final List<SnapSpot> spots;
 
   /// Multiple lines support. If provided, [spots] is ignored.
-  final List<List<EasySpot>>? multiLines;
+  final List<List<SnapSpot>>? multiLines;
 
   /// Colors for each line. Defaults to theme colors.
   final List<Color>? lineColors;
@@ -40,16 +40,13 @@ class EasyLineChart extends StatefulWidget {
   final double dotRadius;
 
   /// Chart styling.
-  final EasyChartStyle style;
+  final SnapChartStyle style;
 
   /// Touch callback.
-  final ValueChanged<EasyTouchData>? onTouch;
+  final ValueChanged<SnapTouchData>? onTouch;
 
   /// Whether to show a tooltip on touch.
   final bool showTooltip;
-
-  /// Custom tooltip builder.
-  final Widget Function(EasySpot spot)? tooltipBuilder;
 
   /// Min/max overrides. Null means auto-calculate from data.
   final double? minX;
@@ -57,7 +54,7 @@ class EasyLineChart extends StatefulWidget {
   final double? minY;
   final double? maxY;
 
-  const EasyLineChart({
+  const SnapLineChart({
     super.key,
     this.spots = const [],
     this.multiLines,
@@ -68,10 +65,9 @@ class EasyLineChart extends StatefulWidget {
     this.fillOpacity = 0.2,
     this.showDots = false,
     this.dotRadius = 4.0,
-    this.style = const EasyChartStyle(),
+    this.style = const SnapChartStyle(),
     this.onTouch,
     this.showTooltip = true,
-    this.tooltipBuilder,
     this.minX,
     this.maxX,
     this.minY,
@@ -79,19 +75,19 @@ class EasyLineChart extends StatefulWidget {
   });
 
   @override
-  State<EasyLineChart> createState() => _EasyLineChartState();
+  State<SnapLineChart> createState() => _SnapLineChartState();
 }
 
-class _EasyLineChartState extends State<EasyLineChart>
+class _SnapLineChartState extends State<SnapLineChart>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
-  List<List<EasySpot>> _oldLines = [];
-  List<List<EasySpot>> _currentLines = [];
+  List<List<SnapSpot>> _oldLines = [];
+  List<List<SnapSpot>> _currentLines = [];
   int? _touchedIndex;
   Offset? _touchPosition;
 
-  List<List<EasySpot>> get _targetLines => widget.multiLines ?? [widget.spots];
+  List<List<SnapSpot>> get _targetLines => widget.multiLines ?? [widget.spots];
 
   @override
   void initState() {
@@ -110,7 +106,7 @@ class _EasyLineChartState extends State<EasyLineChart>
   }
 
   @override
-  void didUpdateWidget(EasyLineChart oldWidget) {
+  void didUpdateWidget(SnapLineChart oldWidget) {
     super.didUpdateWidget(oldWidget);
     final newLines = _targetLines;
     if (_listsChanged(_currentLines, newLines)) {
@@ -120,7 +116,7 @@ class _EasyLineChartState extends State<EasyLineChart>
     }
   }
 
-  bool _listsChanged(List<List<EasySpot>> a, List<List<EasySpot>> b) {
+  bool _listsChanged(List<List<SnapSpot>> a, List<List<SnapSpot>> b) {
     if (a.length != b.length) return true;
     for (int i = 0; i < a.length; i++) {
       if (a[i].length != b[i].length) return true;
@@ -168,17 +164,15 @@ class _EasyLineChartState extends State<EasyLineChart>
     });
 
     if (closestIdx >= 0) {
-      widget.onTouch?.call(
-        EasyTouchData(
-          index: closestIdx,
-          spot: allSpots[closestIdx],
-          isTouched: true,
-        ),
-      );
+      widget.onTouch?.call(SnapTouchData(
+        index: closestIdx,
+        spot: allSpots[closestIdx],
+        isTouched: true,
+      ));
     }
   }
 
-  List<double> _calculateBounds(List<List<EasySpot>> lines) {
+  List<double> _calculateBounds(List<List<SnapSpot>> lines) {
     double minX = widget.minX ?? double.infinity;
     double maxX = widget.maxX ?? double.negativeInfinity;
     double minY = widget.minY ?? double.infinity;
@@ -215,14 +209,14 @@ class _EasyLineChartState extends State<EasyLineChart>
           _touchedIndex = null;
           _touchPosition = null;
         });
-        widget.onTouch?.call(EasyTouchData.none);
+        widget.onTouch?.call(SnapTouchData.none);
       },
       child: AnimatedBuilder(
         animation: _animation,
         builder: (context, _) {
           return CustomPaint(
             size: Size.infinite,
-            painter: EasyLineChartPainter(
+            painter: SnapLineChartPainter(
               oldLines: _oldLines,
               newLines: _currentLines,
               animationValue: _animation.value,

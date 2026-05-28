@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import '../models/easy_spot.dart';
-import '../models/easy_style.dart';
+import '../models/snap_spot.dart';
+import '../models/snap_style.dart';
 
-class EasyScatterChartPainter extends CustomPainter {
-  final List<List<EasySpot>> series;
+class SnapScatterChartPainter extends CustomPainter {
+  final List<List<SnapSpot>> series;
   final double animationValue;
   final List<Color> colors;
   final double dotRadius;
-  final EasyChartStyle style;
+  final SnapChartStyle style;
   final int? touchedIndex;
   final double? minX;
   final double? maxX;
   final double? minY;
   final double? maxY;
 
-  EasyScatterChartPainter({
+  SnapScatterChartPainter({
     required this.series,
     required this.animationValue,
     required this.colors,
@@ -36,7 +36,6 @@ class EasyScatterChartPainter extends CustomPainter {
     final yRange = bounds[3] - bounds[1];
     if (xRange == 0 || yRange == 0) return;
 
-    // Draw background
     if (style.backgroundColor != null) {
       canvas.drawRect(
         Rect.fromLTWH(0, 0, size.width, size.height),
@@ -44,12 +43,10 @@ class EasyScatterChartPainter extends CustomPainter {
       );
     }
 
-    // Draw grid
     if (style.showGrid) {
       _drawGrid(canvas, size);
     }
 
-    // Draw border
     if (style.showBorder) {
       canvas.drawRect(
         Rect.fromLTWH(0, 0, size.width, size.height),
@@ -60,7 +57,6 @@ class EasyScatterChartPainter extends CustomPainter {
       );
     }
 
-    // Draw dots
     int globalIdx = 0;
     for (int s = 0; s < series.length; s++) {
       final color = colors[s % colors.length];
@@ -125,5 +121,5 @@ class EasyScatterChartPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant EasyScatterChartPainter oldDelegate) => true;
+  bool shouldRepaint(covariant SnapScatterChartPainter oldDelegate) => true;
 }

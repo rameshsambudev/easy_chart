@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
-import '../models/easy_bar_data.dart';
-import '../models/easy_style.dart';
-import '../models/easy_touch_data.dart';
-import '../painters/bar_chart_painter.dart';
+import '../models/snap_bar_data.dart';
+import '../models/snap_style.dart';
+import '../models/snap_touch_data.dart';
+import '../painters/snap_bar_chart_painter.dart';
 
 /// A simple bar chart widget.
 ///
 /// ```dart
-/// EasyBarChart(
+/// SnapBarChart(
 ///   bars: [
-///     EasyBar(value: 10, label: 'Jan'),
-///     EasyBar(value: 15, label: 'Feb'),
-///     EasyBar(value: 8, label: 'Mar'),
+///     SnapBar(value: 10, label: 'Jan'),
+///     SnapBar(value: 15, label: 'Feb'),
+///     SnapBar(value: 8, label: 'Mar'),
 ///   ],
 /// )
 /// ```
-class EasyBarChart extends StatefulWidget {
+class SnapBarChart extends StatefulWidget {
   /// The bars to display.
-  final List<EasyBar> bars;
+  final List<SnapBar> bars;
 
   /// Default bar color. Individual bars can override.
   final Color? barColor;
@@ -32,35 +32,35 @@ class EasyBarChart extends StatefulWidget {
   final bool horizontal;
 
   /// Chart styling.
-  final EasyChartStyle style;
+  final SnapChartStyle style;
 
   /// Touch callback.
-  final ValueChanged<EasyTouchData>? onTouch;
+  final ValueChanged<SnapTouchData>? onTouch;
 
   /// Max value override. Null means auto-calculate.
   final double? maxValue;
 
-  const EasyBarChart({
+  const SnapBarChart({
     super.key,
     required this.bars,
     this.barColor,
     this.borderRadius = 4.0,
     this.spacing = 0.3,
     this.horizontal = false,
-    this.style = const EasyChartStyle(),
+    this.style = const SnapChartStyle(),
     this.onTouch,
     this.maxValue,
   });
 
   @override
-  State<EasyBarChart> createState() => _EasyBarChartState();
+  State<SnapBarChart> createState() => _SnapBarChartState();
 }
 
-class _EasyBarChartState extends State<EasyBarChart>
+class _SnapBarChartState extends State<SnapBarChart>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
-  List<EasyBar> _oldBars = [];
+  List<SnapBar> _oldBars = [];
   int? _touchedIndex;
 
   @override
@@ -79,7 +79,7 @@ class _EasyBarChartState extends State<EasyBarChart>
   }
 
   @override
-  void didUpdateWidget(EasyBarChart oldWidget) {
+  void didUpdateWidget(SnapBarChart oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.bars != widget.bars) {
       _oldBars = oldWidget.bars;
@@ -102,13 +102,11 @@ class _EasyBarChartState extends State<EasyBarChart>
 
     if (index >= 0 && index < barCount) {
       setState(() => _touchedIndex = index);
-      widget.onTouch?.call(
-        EasyTouchData(
-          index: index,
-          barValue: widget.bars[index].value,
-          isTouched: true,
-        ),
-      );
+      widget.onTouch?.call(SnapTouchData(
+        index: index,
+        barValue: widget.bars[index].value,
+        isTouched: true,
+      ));
     }
   }
 
@@ -122,14 +120,14 @@ class _EasyBarChartState extends State<EasyBarChart>
           _handleTap(details.localPosition, context.size ?? Size.zero),
       onTapUp: (_) {
         setState(() => _touchedIndex = null);
-        widget.onTouch?.call(EasyTouchData.none);
+        widget.onTouch?.call(SnapTouchData.none);
       },
       child: AnimatedBuilder(
         animation: _animation,
         builder: (context, _) {
           return CustomPaint(
             size: Size.infinite,
-            painter: EasyBarChartPainter(
+            painter: SnapBarChartPainter(
               bars: widget.bars,
               oldBars: _oldBars,
               animationValue: _animation.value,
